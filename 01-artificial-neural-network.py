@@ -39,3 +39,20 @@ ann.add(tf.keras.layers.Dense(units = 1, activation = 'sigmoid')) #Output layer
 
 #Compiling the neural network
 ann.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+
+#Training the neural network
+ann.fit(x_training_data, y_training_data, batch_size = 32, epochs = 100)
+
+#Making predictions with the artificial neural network
+ann.predict(scaler.transform([[1, 0, 0, 555, 1, 52, 4, 75000, 3, 0, 1, 65000]]))
+
+#Generate predictions from our test data
+predictions = ann.predict(x_test_data) > 0.5
+
+#Generate a confusion matrix
+from sklearn.metrics import confusion_matrix
+confusion_matrix(y_test_data, predictions)
+
+#Generate an accuracy score
+from sklearn.metrics import accuracy_score
+accuracy_score(y_test_data, predictions)
