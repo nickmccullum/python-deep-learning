@@ -44,3 +44,9 @@ cnn.add(tf.keras.layers.Dense(units=128, activation='sigmoid'))
 
 #Adding our output layer
 cnn.add(tf.keras.layers.Dense(units=1, activation='sigmoid'))
+
+#Compiling our convolutional neural network
+cnn.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+
+#Training our convolutional neural network
+cnn.fit(x = training_set, validation_data = test_set, epochs = 25)
