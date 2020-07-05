@@ -68,3 +68,20 @@ print(cnn.predict(test_image_2))
 
 #Determining which number corresponds to each animal
 training_set.class_indices
+
+#Making categorial predictions
+result_1 = cnn.predict(test_image_1)
+result_2 = cnn.predict(test_image_2)
+
+if (result_1 >= 0.5):
+    result_1 = 'dog'
+else:
+    result_1 = 'cat'
+    
+if (result_2 >= 0.5):
+    result_2 = 'dog'
+else:
+    result_2 = 'cat'
+    
+print(result_1)
+print(result_2)
