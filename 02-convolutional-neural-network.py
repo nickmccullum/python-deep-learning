@@ -50,3 +50,21 @@ cnn.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accura
 
 #Training our convolutional neural network
 cnn.fit(x = training_set, validation_data = test_set, epochs = 25)
+
+#Prediction preprocessing
+from tensorflow.keras.preprocessing import image
+test_image_1 = image.load_img('predictions/cat_or_dog_1.jpg', target_size = (64, 64))
+test_image_2 = image.load_img('predictions/cat_or_dog_2.jpg', target_size = (64, 64))
+
+test_image_1 = image.img_to_array(test_image_1)
+test_image_2 = image.img_to_array(test_image_2)
+
+test_image_1 = np.expand_dims(test_image_1, axis = 0)
+test_image_2 = np.expand_dims(test_image_2, axis = 0)
+
+#Making predictions on our two isolated images
+print(cnn.predict(test_image_1))
+print(cnn.predict(test_image_2))
+
+#Determining which number corresponds to each animal
+training_set.class_indices
