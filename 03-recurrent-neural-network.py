@@ -78,3 +78,26 @@ rnn.compile(optimizer = 'adam', loss = 'mean_squared_error')
 
 #Training the recurrent neural network
 rnn.fit(x_training_data, y_training_data, epochs = 100, batch_size = 32)
+
+#Import the test data set and transform it into a NumPy array
+test_data = pd.read_csv('FB_test_data.csv')
+test_data = test_data.iloc[:, 1].values
+
+#Make sure the test data's shape makes sense
+print(test_data.shape)
+
+#Plot the test data
+plt.plot(test_data)
+
+#Create unscaled training data and test data objects
+unscaled_training_data = pd.read_csv('FB_training_data.csv')
+unscaled_test_data = pd.read_csv('FB_test_data.csv')
+
+#Concatenate the unscaled data
+all_data = pd.concat((unscaled_x_training_data['Open'], unscaled_test_data['Open']), axis = 0)
+
+#Create our x_test_data object, which has each January day + the 40 prior days
+x_test_data = all_data[len(all_data) - len(test_data) - 40:].values
+x_test_data = np.reshape(x_test_data, (-1, 1))
+
+#Scale the test data
