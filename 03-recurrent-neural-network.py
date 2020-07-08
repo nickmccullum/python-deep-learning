@@ -75,3 +75,6 @@ rnn.add(Dense(units = 1))
 
 #Compiling the recurrent neural network
 rnn.compile(optimizer = 'adam', loss = 'mean_squared_error')
+
+#Training the recurrent neural network
+rnn.fit(x_training_data, y_training_data, epochs = 100, batch_size = 32)
