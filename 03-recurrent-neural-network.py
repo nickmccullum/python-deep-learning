@@ -39,3 +39,39 @@ x_training_data = np.reshape(x_training_data, (x_training_data.shape[0],
 
 #Printing the new shape of x_training_data
 print(x_training_data.shape)
+
+#Importing our TensorFlow libraries
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import LSTM
+from tensorflow.keras.layers import Dropout
+
+#Initializing our recurrent neural network
+rnn = Sequential()
+
+#Adding our first LSTM layer
+rnn.add(LSTM(units = 45, return_sequences = True, input_shape = (x_training_data.shape[1], 1)))
+
+#Perform some dropout regularization
+rnn.add(Dropout(0.2))
+
+#Adding three more LSTM layers with dropout regularization
+for i in [True, True, False]:
+    rnn.add(LSTM(units = 45, return_sequences = i))
+    rnn.add(Dropout(0.2))
+
+#(Original code for the three additional LSTM layers)
+# rnn.add(LSTM(units = 45, return_sequences = True))
+# rnn.add(Dropout(0.2))
+
+# rnn.add(LSTM(units = 45, return_sequences = True))
+# rnn.add(Dropout(0.2))
+
+# rnn.add(LSTM(units = 45))
+# rnn.add(Dropout(0.2))
+
+#Adding our output layer
+rnn.add(Dense(units = 1))
+
+#Compiling the recurrent neural network
+rnn.compile(optimizer = 'adam', loss = 'mean_squared_error')
