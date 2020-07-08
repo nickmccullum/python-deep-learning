@@ -101,3 +101,32 @@ x_test_data = all_data[len(all_data) - len(test_data) - 40:].values
 x_test_data = np.reshape(x_test_data, (-1, 1))
 
 #Scale the test data
+x_test_data = scaler.transform(x_test_data)
+
+#Grouping our test data
+final_x_test_data = []
+for i in range(40, len(x_test_data)):
+    final_x_test_data.append(x_test_data[i-40:i, 0])
+final_x_test_data = np.array(final_x_test_data)
+
+#Reshaping the NumPy array to meet TensorFlow standards
+final_x_test_data = np.reshape(final_x_test_data, (final_x_test_data.shape[0], 
+                                               final_x_test_data.shape[1], 
+                                               1))
+
+#Generating our predicted values
+predictions = rnn.predict(final_x_test_data)
+
+#Plotting our predicted values
+plt.clf() #This clears the old plot from our canvas
+plt.plot(predictions)
+
+#Unscaling the predicted values and re-plotting the data
+unscaled_predictions = scaler.inverse_transform(predictions)
+plt.clf() #This clears the first prediction plot from our canvas
+plt.plot(unscaled_predictions)
+
+#Plotting the predicted values against Facebook's actual stock price
+plt.plot(unscaled_predictions, color = '#135485', label = "Predictions")
+plt.plot(test_data, color = 'black', label = "Real Data")
+plt.title('Facebook Stock Price Predictions')
